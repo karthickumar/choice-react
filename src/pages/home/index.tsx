@@ -1,15 +1,20 @@
+import React, { useEffect } from "react";
 import { Container, Typography } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
-import React from "react";
+import { useBannerAPI } from "../../api/home/useBannerAPI";
+import { CarouselBanner } from "../../components/Carousel/Carousel";
 
 function Home() {
+  const { bannerData, isLoading, getBannerInfo } = useBannerAPI();
+
+  useEffect(() => {
+    getBannerInfo();
+  }, []);
+
   return (
-    <Container component="main">
+    <Container component="main" maxWidth={false}>
       <CssBaseline />
-      <Typography component="h1" variant="h5">
-        Home
-      </Typography>
+      <CarouselBanner items={bannerData} />
     </Container>
   );
 }

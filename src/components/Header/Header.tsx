@@ -96,8 +96,9 @@ function Header(props: any) {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={togglePanMenu}
           >
-            <MenuIcon onClick={togglePanMenu} />
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Choice
