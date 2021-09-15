@@ -18,6 +18,7 @@ const config = {
   devServer: {
     open: true,
     host: "localhost",
+    historyApiFallback: true
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -65,10 +66,8 @@ const config = {
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
-  },
-  devServer: {
-    historyApiFallback: true
   }
+  
 };
 
 module.exports = () => {

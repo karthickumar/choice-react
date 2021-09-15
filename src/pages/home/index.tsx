@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { Container, Typography } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { useBannerAPI } from "../../api/home/useBannerAPI";
-import { CarouselBanner } from "../../components/Carousel/Carousel";
+const CarouselBannerLazy = React.lazy(
+  () => import("../../components/Carousel/Carousel")
+);
 
 function Home() {
   const { bannerData, isLoading, getBannerInfo } = useBannerAPI();
@@ -14,7 +16,9 @@ function Home() {
   return (
     <Container component="main" maxWidth={false}>
       <CssBaseline />
-      <CarouselBanner items={bannerData} />
+      <Suspense fallback="Banner Loading...">
+        <CarouselBannerLazy items={bannerData} />
+      </Suspense>
     </Container>
   );
 }
