@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,13 +14,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useCookies } from "react-cookie";
 import { useLoginAPI } from "../../api/user/userAPI";
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import LoadingGauage from "../../components/LoadingGauage/index";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Choice Shopy
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -34,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    position: "relative",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -53,13 +57,17 @@ function SignIn(props: any) {
 
   const [cookies, setCookie] = useCookies(["isLoggedin"]);
   const { user = {}, isLoading = false, login = () => {} } = useLoginAPI();
+  const [isToastOpen, setToastOpen] = useState(false);
 
   useEffect(() => {
+    console.log("[user] -", user);
     if (Object.keys(user).length) {
       console.log("[User Details] - ", user);
       if (user?.uid) {
         setCookie("isLoggedin", true);
         props.history.push("/home");
+      } else if (user?.error) {
+        setToastOpen(true);
       }
     }
   }, [user]);
@@ -79,6 +87,7 @@ function SignIn(props: any) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
+        {isLoading && <LoadingGauage showProgress={false} />}
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -138,6 +147,15 @@ function SignIn(props: any) {
       <Box mt={8}>
         <Copyright />
       </Box>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={isToastOpen}
+        onClose={() => setToastOpen(false)}
+      >
+        <Alert variant="filled" severity="error">
+          {user?.error}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

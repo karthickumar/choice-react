@@ -8,11 +8,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
-
 import { useLoginCheck } from "../../utils/utils";
 import { useCookies } from "react-cookie";
-
 import PanCakeMenu from "../PanCakeMenu/PanCakeMenu";
+
+import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 0.1,
+    cursor: "pointer",
   },
   search: {
     position: "relative",
@@ -72,6 +73,10 @@ function Header(props: any) {
   const { isLoggedIn = false } = useLoginCheck();
   const [cookies, setCookie, removeCookie] = useCookies(["isLoggedin"]);
 
+  const navigateToHome = () => {
+    props?.history?.push("/");
+  };
+
   const authActionHandler = () => {
     console.log("Login Clicked");
     if (isLoggedIn) {
@@ -100,8 +105,12 @@ function Header(props: any) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Choice
+          <Typography
+            variant="h6"
+            className={classes.title}
+            onClick={navigateToHome}
+          >
+            <img src={logo}></img>
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
