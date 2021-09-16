@@ -1,0 +1,25 @@
+.CarouselContainer {
+  margin-top: 10px;
+  .Banner {
+    height: 500px;
+    position: relative;
+
+    .BannerGrid {
+      height: 100%;
+      width: 100%;
+
+      .Media {
+        width: 100%;
+      }
+
+      .BannerCaption {
+        background-color: #00000075;
+        color: #fff;
+        width: fit-content;
+        margin: 10px 0 0 15px;
+        padding: 5px 10px;
+        border-radius: 2px;
+      }
+    }
+  }
+}
